@@ -12,9 +12,7 @@ def open_and_read_file(file_path):
 
     file = open(file_path).read()
 
-
     return file
-
 
 def make_chains(text_string):
     """Take input text as string; return dictionary of Markov chains.
@@ -24,9 +22,7 @@ def make_chains(text_string):
     """
     words = text_string.split()
 
-
     chains = {}
-
 
     for i in range(len(words) - 1):
         chains[(words[i], words[i + 1])] = chains.get((words[i], words[i + 1]), [])
@@ -40,10 +36,8 @@ def make_chains(text_string):
 def make_text(chains_dict):
     """Return text from chains."""
 
-    # link = list(chains_dict.keys())[0]
-    # generated_sentence = [link[0], link[1]]
     upper_links = []
-    # your code goes here
+
     for chain in chains.keys():
         if chain[0][0].isupper():
             upper_links.append(chain)
@@ -52,7 +46,7 @@ def make_text(chains_dict):
     generated_sentence = [link[0],link[1]]
 
     punctuation_keys = []
-    # your code goes here
+
     for chain in chains.keys():
         if chain[1][-1] in string.punctuation and chain[1][-1] != ",":
             punctuation_keys.append(chain)     
@@ -60,7 +54,6 @@ def make_text(chains_dict):
     end_link = choice(punctuation_keys)
 
 
-#loop starts
     while chains[link]:
         if link == end_link:
             break
@@ -69,21 +62,14 @@ def make_text(chains_dict):
             link = (link[1], choice(chains_dict[link]))
             generated_sentence.append(link[1])
                 
-
     return " ".join(generated_sentence)
 
 
-
 input_path = "texts/EAP.txt"
-
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
-
 # Get a Markov chain
 chains = make_chains(input_text)
-
 # Produce random text
 random_text = make_text(chains)
 print(random_text)
-
-make_chains("texts/EAP.txt")
